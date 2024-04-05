@@ -4,7 +4,7 @@
 
 This project extends the functionality of a previously developed client-server application to support multi-threaded operations, allowing multiple clients to schedule a timetable concurrently. The server application will handle each client connection in a separate thread, ensuring synchronization and controlled access to a shared memory-based data collection.
 
-## Description
+## Description.
 
 The application now supports multiple clients scheduling a timetable in parallel or concurrently. Each client connection to the server initiates a new thread. These server-side threads are responsible for:
 
