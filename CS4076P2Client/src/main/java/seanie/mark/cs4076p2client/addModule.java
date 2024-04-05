@@ -161,6 +161,7 @@ public class addModule {
 
         Scene scene;
         scene = new Scene(root, 500, 600);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm()); //Added to fix Mac font issue
         Utillity.enterForSubmisson(scene,submitButton);
 
         stage.setScene(scene);
