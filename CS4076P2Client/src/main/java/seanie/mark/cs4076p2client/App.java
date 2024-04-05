@@ -71,11 +71,14 @@ public class App extends Application {
 
             Button showTimetable = new Button("Display timetable");
             showTimetable.setOnAction(event -> new showTimetable(stage,this::returnHome, finalIn, finalOut));
+
+            Button makeRequest = new Button("Make request");
+            makeRequest.setOnAction(event -> new requests (stage,this:: returnHome,finalIn,finalOut));
             Button quitApplication = new Button("Quit application");
             quitApplication.setOnAction((event -> Utillity.quitApp(finalIn, finalOut) ));
 
 
-            layout.getChildren().addAll(welcomelabel, addModule, removeModule, showTimetable, quitApplication);
+            layout.getChildren().addAll(welcomelabel, addModule, removeModule, showTimetable,makeRequest, quitApplication);
 
             mainScene = new Scene(layout, 500, 600);
             mainScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());

@@ -8,6 +8,8 @@ import javafx.scene.input.KeyCode;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class Utillity {
@@ -79,5 +81,7 @@ public class Utillity {
 
         return new int[]{nodeX,nodeY};
     }
+
+
 
 }
