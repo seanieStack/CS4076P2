@@ -65,10 +65,9 @@ public class showTimetable {
                         }
                         String response = responseBuilder.toString();
 
-                        //List<Module> modules = Utillity.rebuildModules(response);
-
                         System.out.println(response);
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                         displayText.setText("Error Sending Display Schedule Request");
                     }
                 });
