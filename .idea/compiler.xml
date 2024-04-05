@@ -6,6 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="CS4076P2Server" />
+        <module name="CS4076P2Client" />
         <module name="CS4076P1Client" />
         <module name="CS4076P1Server" />
       </profile>
