@@ -3,20 +3,14 @@ package seanie.mark.cs4076p2client;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
-
-
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.util.List;
 
 
 public class showTimetable {
@@ -55,6 +49,7 @@ public class showTimetable {
         submitButton.setOnAction(e -> {
 
                     try {
+                        stage.setFullScreen(true); // Added this so all text displays properly
                         out.println("ds");
 
                         StringBuilder responseBuilder = new StringBuilder();
@@ -65,12 +60,62 @@ public class showTimetable {
                         }
                         String response = responseBuilder.toString();
 
+
+
                         System.out.println(response);
+
+                        GridPane timetable = new GridPane();
+
+                        String [] times = Utillity.getTimes();
+                        String [] days = Utillity.getDays();
+
+                        timetable.setPadding(new javafx.geometry.Insets(12,12,12,12));
+                        timetable.setVgap(100);
+                        timetable.setHgap(100);
+
+
+                        Label mondayLabel = new Label("Monday");
+                        Label tuesdayLabel = new Label("Tuesday");
+                        Label wednesdayLabel = new Label("Wednesday");
+                        Label thursdayLabel = new Label("Thursday");
+                        Label fridayLabel   = new Label("Friday");
+
+
+                        GridPane.setConstraints(mondayLabel,1,0);
+                        GridPane.setConstraints(tuesdayLabel,2,0);
+                        GridPane.setConstraints(wednesdayLabel,3,0);
+                        GridPane.setConstraints(thursdayLabel,4,0);
+                        GridPane.setConstraints(fridayLabel,5,0);
+                        //TODO: Refactor this into a loop later
+
+                        for (int j = 0 ; j < times.length; j++){
+                            Label timeLabel = new Label(times[j]);
+                            GridPane.setConstraints(timeLabel,0,j+1);
+                            timetable.getChildren().add(timeLabel);
+                        }
+
+
+                        // parts[i] =  0 = Module, 1 = Day , 2 = Start Time , 3 = End Time , 4 = Room
+                        // response takes the form "CS4096,Monday,09:00,10:00,KGB-12";
+                        int nodes[] =  Utillity.moduleNodes(response);
+                        String parts []= Utillity.splitPayload(response);
+                        Label exampleLabel = new Label(parts[0]+ " " +parts[4]);
+                        GridPane.setConstraints(exampleLabel,nodes[0],nodes[1] );
+                        //TODO: Add functionallity for multiple modules (loop)
+
+
+
+                        timetable.getChildren().addAll(mondayLabel,tuesdayLabel,wednesdayLabel,thursdayLabel,fridayLabel,exampleLabel);
+                        layout.getChildren().add(timetable);
+
+
                     } catch (Exception ex) {
                         ex.printStackTrace();
                         displayText.setText("Error Sending Display Schedule Request");
                     }
                 });
+
+
 
         stage.setOnCloseRequest((WindowEvent we) -> Utillity.quitApp(in, out));
 
