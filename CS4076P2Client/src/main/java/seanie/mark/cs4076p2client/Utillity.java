@@ -43,27 +43,27 @@ public class Utillity {
     }
 
     public static String[] splitPayload ( String payload) {
-        String trimmedInput = payload.substring(1, payload.length() - 1);
+        String trimmedInput = payload.substring(1, payload.length() - 1); //Causes lost of first module letter
 
-        return trimmedInput.split("><");
+        return trimmedInput.split(","); //Refactored from whitespace
     }
 
-    public static String[] splitTime(String timePart) {
-        return timePart.split("-");
-    }
+
     public static int [] moduleNodes (String payload) {
         String[] days = getDays();
         String[] times = getTimes();
         
-        String day = splitPayload(payload)[2];
+        String day = splitPayload(payload)[1];
       
 
-        String [] bothTimes =splitTime(splitPayload(payload)[1]);
+
+        String startTime = splitPayload(payload)[2];
+
 
         int nodeY = 0;
 
         for (int i = 0; i < times.length; i++) {
-            if (bothTimes[0].equals(times[i])) {
+            if (startTime.equals(times[i])) {
                 nodeY = i + 1;
                 break;
             }
