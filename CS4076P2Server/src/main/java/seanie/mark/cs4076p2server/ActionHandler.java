@@ -89,19 +89,28 @@ public class ActionHandler {
     }
 
     static String displaySchedule(String details, List<Module> currentModules) {
-        String[] parts = details.strip().split(" ");
+//        String[] parts = details.strip().split(" ");
+//
+//        String moduleCode = parts[0];
+//
+//        for(Module m : currentModules){
+//            if(m.getModuleCode().equals(moduleCode)){
+//                List<TimetableEntry> timetable = m.getTimetable();
+//                for(TimetableEntry t : timetable){
+//                    System.out.println(t.getTime() + " " + t.getDay() + " " + t.getRoom());
+//                }
+//                return "cp";
+//            }
+//        }
+//        return "cnf";
+//    }
 
-        String moduleCode = parts[0];
+        String x = UtilityFunctions.getFullTimetableAsString(currentModules);
 
-        for(Module m : currentModules){
-            if(m.getModuleCode().equals(moduleCode)){
-                List<TimetableEntry> timetable = m.getTimetable();
-                for(TimetableEntry t : timetable){
-                    System.out.println(t.getTime() + " " + t.getDay() + " " + t.getRoom());
-                }
-                return "cp";
-            }
-        }
-        return "cnf";
+        System.out.println(x);
+
+        return x;
     }
 }
+
+

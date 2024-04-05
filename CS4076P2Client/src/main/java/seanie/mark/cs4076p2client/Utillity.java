@@ -7,6 +7,8 @@ import javafx.scene.input.KeyCode;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Utillity {
 
@@ -78,4 +80,40 @@ public class Utillity {
         return new int[]{nodeX,nodeY};
     }
 
+    public static List<Module> rebuildModules(String timetableString) {
+        List<Module> modules = new ArrayList<>();
+        Module currentModule = null;
+        List<TimetableEntry> currentTimetable = new ArrayList<>();
+
+        // Split the input string into lines
+        String[] lines = timetableString.split("\n");
+        for (String line : lines) {
+            if (line.startsWith("Module: ")) {
+                // If we encounter a new module and currentModule is not null, save the previous module
+                if (currentModule != null) {
+                    modules.add(currentModule);
+                    currentTimetable = new ArrayList<>(); // Reset for the next module
+                }
+                String moduleCode = line.substring(8); // Extract module code
+                currentModule = new Module(moduleCode); // Create a new module with an empty timetable
+            } else if (!line.trim().isEmpty()) {
+                // Assuming line format is "Day: ..., Start Time: ..., End Time: ..., Room: ..."
+                String[] parts = line.split(", ");
+                String day = parts[0].split(": ")[1];
+                String startTime = parts[1].split(": ")[1];
+                String endTime = parts[2].split(": ")[1];
+                String room = parts[3].split(": ")[1];
+
+                TimetableEntry entry = new TimetableEntry(startTime+":"+endTime, day, room);
+                currentTimetable.add(entry);
+            }
+        }
+
+        // Don't forget to add the last module
+        if (currentModule != null && !currentTimetable.isEmpty()) {
+            modules.add(currentModule);
+        }
+
+        return modules;
+    }
 }

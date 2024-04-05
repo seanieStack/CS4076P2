@@ -3,6 +3,25 @@ package seanie.mark.cs4076p2server;
 import java.util.*;
 
 public class UtilityFunctions {
+
+    static String getFullTimetableAsString(List<Module> currentModules) {
+        StringBuilder timetableBuilder = new StringBuilder();
+
+        for (Module module : currentModules) {
+            timetableBuilder.append("Module: ").append(module.getModuleCode()).append("\n");
+            for (TimetableEntry entry : module.getTimetable()) {
+                timetableBuilder.append("Day: ").append(entry.getDay())
+                        .append(", Start Time: ").append(entry.getStartTime())
+                        .append(", End Time: ").append(entry.getEndTime())
+                        .append(", Room: ").append(entry.getRoom())
+                        .append("\n");
+            }
+            timetableBuilder.append("\n");
+        }
+        timetableBuilder.append("END_OF_TIMETABLE");
+        return timetableBuilder.toString();
+    }
+
     static int stringTimeToIntTime(String time){
         String temp = time.substring(0, 2);
         temp += time.substring(3);

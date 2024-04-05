@@ -16,6 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.List;
 
 
 public class showTimetable {
@@ -41,10 +42,6 @@ public class showTimetable {
         stage.setScene(scene);
         stage.setTitle("Welcome Screen");
 
-
-        Label moduleLabel = new Label("Module:");
-        TextField userInputModule = new TextField();
-
         HBox root2 = new HBox();
         root2.setSpacing(10);
 
@@ -56,26 +53,21 @@ public class showTimetable {
         Text displayText = new Text();
 
         submitButton.setOnAction(e -> {
-                    String userModule = userInputModule.getText();
 
                     try {
-                        out.println("ds " + userModule);
-                        String response = in.readLine();
+                        out.println("ds");
 
-                        switch (response){
-                            case "cp":
-                                displayText.setText("Schedule Displayed in server Console");
-                                break;
-                            case "cnf":
-                                displayText.setText("Module not found");
-                                Alert notFoundAlert = new Alert(AlertType.ERROR); // Displays in Chinese 
-                                notFoundAlert.setTitle("Error : Module not found");
-                                notFoundAlert.setHeaderText(null);
-                                notFoundAlert.setContentText("This module does not exist in our record , try adding it by selecting 'return' ,'add module'");
-                                notFoundAlert.show();
-                                break;
+                        StringBuilder responseBuilder = new StringBuilder();
+                        String line;
+                        while (!(line = in.readLine()).equals("END_OF_TIMETABLE")) {
+                            responseBuilder.append(line);
+                            responseBuilder.append('\n'); // add the newline back
                         }
+                        String response = responseBuilder.toString();
 
+                        //List<Module> modules = Utillity.rebuildModules(response);
+
+                        System.out.println(response);
                     } catch (Exception ex) {
                         displayText.setText("Error Sending Display Schedule Request");
                     }
@@ -83,6 +75,6 @@ public class showTimetable {
 
         stage.setOnCloseRequest((WindowEvent we) -> Utillity.quitApp(in, out));
 
-        layout.getChildren().addAll(moduleLabel, userInputModule, root2, displayText);
+        layout.getChildren().addAll(root2, displayText);
     }
 }
