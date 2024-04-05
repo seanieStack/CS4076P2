@@ -8,12 +8,12 @@ public class UtilityFunctions {
         StringBuilder timetableBuilder = new StringBuilder();
 
         for (Module module : currentModules) {
-            timetableBuilder.append("Module: ").append(module.getModuleCode()).append("\n");
+            timetableBuilder.append("").append(module.getModuleCode());
             for (TimetableEntry entry : module.getTimetable()) {
-                timetableBuilder.append("Day: ").append(entry.getDay())
-                        .append(", Start Time: ").append(entry.getStartTime())
-                        .append(", End Time: ").append(entry.getEndTime())
-                        .append(", Room: ").append(entry.getRoom())
+                timetableBuilder.append(",").append(entry.getDay())
+                        .append(",").append(entry.getStartTime())
+                        .append(",").append(entry.getEndTime())
+                        .append(",").append(entry.getRoom())
                         .append("\n");
             }
             timetableBuilder.append("\n");
@@ -21,6 +21,8 @@ public class UtilityFunctions {
         timetableBuilder.append("END_OF_TIMETABLE");
         return timetableBuilder.toString();
     }
+
+
 
     static int stringTimeToIntTime(String time){
         String temp = time.substring(0, 2);
