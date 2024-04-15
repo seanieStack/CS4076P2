@@ -2,10 +2,11 @@ package seanie.mark.cs4076p2client;
 
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -32,36 +33,59 @@ public class removeModule {
 
     private void  initializeScreen () {
 
+        BorderPane root = new BorderPane();
+
+        HBox settings = new HBox();
+        settings.setPadding(new Insets(5, 0, 0, 0));
+        settings.setAlignment(Pos.CENTER);
+
+        HBox module = new HBox();
+        module.setPadding(new Insets(5, 0, 0, 0));
+        module.setAlignment(Pos.CENTER);
+
+        HBox room = new HBox();
+        room.setPadding(new Insets(5, 0, 0, 0));
+        room.setAlignment(Pos.CENTER);
+
+        HBox title = new HBox();
+        title.setPadding(new Insets(20));
+        title.setSpacing(10);
+        title.setAlignment(Pos.CENTER);
+
+        HBox finishButton = new HBox();
+        finishButton.setSpacing(10);
+        finishButton.setAlignment(Pos.CENTER);
+
+        Label screenDescriptor = new Label("Remove Existing Module");
+        screenDescriptor.setStyle("-fx-font-size: 20pt; -fx-font-weight: bold;");
+
         Label moduleLabel = new Label("Module:");
         TextField userInputModule = new TextField();
 
-        Label startTimeLabel = new Label("Start Time:");
         ChoiceBox<String> selectStartTime = new ChoiceBox<>();
         selectStartTime.getItems().addAll("09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00");
-        selectStartTime.setValue("09:00"); // Default start time
+        selectStartTime.setValue("09:00");
 
-
-        Label endTimeLabel = new Label("End Time:");
+        Label timeSeparator = new Label("-");
 
         ChoiceBox<String> selectEndTime = new ChoiceBox<>();
         selectEndTime.getItems().addAll("09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00");
-        selectEndTime.setValue("10:00"); //Default end time
+        selectEndTime.setValue("10:00");
 
+        Label timeDaySeparator = new Label(" on ");
 
-        Label dayLabel = new Label("Day : ");
         ChoiceBox<String> dayMenu = new ChoiceBox<>();
         dayMenu.getItems().addAll("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
-        dayMenu.setValue("Monday"); //Default value
+        dayMenu.setValue("Monday");
 
 
         Label roomLabel = new Label("Room:");
         TextField userInputRoom = new TextField();
-        HBox root2 = new HBox();
-        root2.setSpacing(10);
+
         Button submitButton = new Button("Submit");
         Button backButton = new Button("Return");
-        root2.getChildren().addAll(submitButton, backButton);
 
+        // Create a Text element to display the result
         Text displayText = new Text();
         backButton.setOnAction(e -> returnToMain.run());
 
@@ -115,22 +139,40 @@ public class removeModule {
             }
         });
 
+        title.getChildren().addAll(screenDescriptor);
+        module.getChildren().addAll(moduleLabel, userInputModule);
+        settings.getChildren().addAll(selectStartTime, timeSeparator, selectEndTime, timeDaySeparator, dayMenu);
+        room.getChildren().addAll(roomLabel, userInputRoom);
+        finishButton.getChildren().addAll(submitButton, backButton);
 
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(10, 10, 10, 10));
-        root.getChildren().addAll(root2, moduleLabel, userInputModule, startTimeLabel, selectStartTime, endTimeLabel, selectEndTime, dayLabel, dayMenu, roomLabel, userInputRoom, submitButton, displayText);
-
-        Scene scene;
-        scene = new Scene(root, 500, 600);
+        VBox form = new VBox(10);
+        form.setAlignment(Pos.CENTER);
+        form.setPadding(new Insets(10, 10, 10, 10));
+        form.getChildren().addAll(module, settings, room, finishButton, displayText);
 
         stage.setOnCloseRequest((WindowEvent we) -> Utillity.quitApp(in, out));
 
+        root.setTop(title);
+        root.setCenter(form);
 
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image(String.valueOf(getClass().getResource("/" + Utillity.getRandomImage()))),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, false)
+        );
+        root.setBackground(new Background(backgroundImage));
 
+        Scene scene;
+        scene = new Scene(root, 500, 600);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm()); //Added to fix Mac font issue
         Utillity.enterForSubmisson(scene,submitButton);
 
         stage.setScene(scene);
         stage.setTitle("Remove Module");
+        stage.getIcons().add(Utillity.icon);
+        stage.setResizable(false);
         stage.show();
 
     }

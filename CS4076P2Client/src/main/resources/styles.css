@@ -1,14 +1,53 @@
 .root {
     -fx-font-family: Arial;
     -fx-font-size: 12pt;
-}.button {
-     -fx-font-family: Arial;
-     -fx-font-size: 10pt;
- }
+}
+.button {
+    -fx-font-family: Arial;
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+    -fx-background-color: #118f00;
+    -fx-padding: 10px;
+}
+
+.button:hover {
+    -fx-background-color: #eeeeee;
+}
+.text{
+    -fx-font-family: Arial;
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+.button:pressed {
+    -fx-background-color: #dddddd;
+}
+.label {
+    -fx-font-family: Arial;
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+}
+
+.label:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+}
+.choice-box{
+    -fx-font-family: Arial;
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-background-color: #118f00;
+}
+.text-field{
+    -fx-max-width: 200px;
+}
 .layout{
--fx-background-image: url('UL_LOGO.png');
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
+
 }
  .label {
      -fx-font-weight: bold;

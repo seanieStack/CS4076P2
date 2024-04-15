@@ -3,16 +3,16 @@ package seanie.mark.cs4076p2client;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Utillity {
+
+    public static Image icon = new Image(String.valueOf(Utillity.class.getResource("/UL_LOGO.png")));
 
     public static void quitApp(BufferedReader in, PrintWriter out) {
         try{
@@ -82,6 +82,20 @@ public class Utillity {
         return new int[]{nodeX,nodeY};
     }
 
+    public static String getRandomImage() {
+        String[] images = {
+                "bg1.png"
+//                "bg2.png",
+//                "bg3.png",
+//                "bg4.png",
+//                "bg5.png",
+//                "bg6.png",
+//                "bg7.png",
+//                "bg8.png",
+        };
+        int idx = new Random().nextInt(images.length);
+        return images[idx];
+    }
 
 
 }

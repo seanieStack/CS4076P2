@@ -3,9 +3,8 @@ package seanie.mark.cs4076p2client;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -116,7 +115,17 @@ public class showTimetable {
                 });
 
 
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image(String.valueOf(getClass().getResource("/" + Utillity.getRandomImage()))),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, false)
+        );
+        layout.setBackground(new Background(backgroundImage));
 
+        stage.setResizable(false);
+        stage.getIcons().add(Utillity.icon);
         stage.setOnCloseRequest((WindowEvent we) -> Utillity.quitApp(in, out));
 
         layout.getChildren().addAll(root2, displayText);
