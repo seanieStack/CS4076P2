@@ -59,18 +59,20 @@ public class showTimetable {
                         }
                         String response = responseBuilder.toString();
 
-
-
+                        String[] classEntries = response.split("!\\s*"); // For multiple entries 
+                        int numClasses = Utillity.getNumClasses(response);
+                        
                         System.out.println(response);
 
                         GridPane timetable = new GridPane();
 
                         String [] times = Utillity.getTimes();
                         String [] days = Utillity.getDays();
-
-                        timetable.setPadding(new javafx.geometry.Insets(12,12,12,12));
-                        timetable.setVgap(100);
-                        timetable.setHgap(100);
+                        
+                        //Changed to a beter size 
+                        timetable.setPadding(new javafx.geometry.Insets(6,6,6,6));
+                        timetable.setVgap(30);
+                        timetable.setHgap(30);
 
 
                         Label mondayLabel = new Label("Monday");
@@ -96,12 +98,31 @@ public class showTimetable {
 
                         // parts[i] =  0 = Module, 1 = Day , 2 = Start Time , 3 = End Time , 4 = Room
                         // response takes the form "CS4096,Monday,09:00,10:00,KGB-12";
+                        /**
                         int nodes[] =  Utillity.moduleNodes(response);
                         String parts []= Utillity.splitPayload(response);
                         Label exampleLabel = new Label(parts[0]+ " " +parts[4]);
                         GridPane.setConstraints(exampleLabel,nodes[0],nodes[1] );
                         //TODO: Add functionallity for multiple modules (loop)
+                        */
+                        
+                        if (classEntries.length != numClasses) {
+                            System.out.println("Error: Mismatch between expected number of classes and actual data.");
+                            return;  // Handling possible data mismatch
+                        }
 
+                        for (int i = 0; i < numClasses; i++) {
+                            String entry = classEntries[i].trim();
+                            if (entry.isEmpty()) continue;  // Skip any empty entries due to split
+
+                            String[] parts = entry.split(",");  // Split entry into parts
+                            if (parts.length < 5) continue;  // Ensure all parts are present
+
+                            int[] nodes = Utillity.moduleNodes(entry);  // Determine grid positions based on time and day
+                            Label moduleWithNodes = new Label(parts[0] + " " + parts[4]);  // Format: ModuleCode Room
+                            GridPane.setConstraints(moduleWithNodes, nodes[0], nodes[1]);  // Set position in the grid
+                            timetable.getChildren().add(moduleWithNodes);
+                        }
 
 
                         timetable.getChildren().addAll(mondayLabel,tuesdayLabel,wednesdayLabel,thursdayLabel,fridayLabel,exampleLabel);
