@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.*;
 
 public class Utillity {
@@ -97,5 +98,19 @@ public class Utillity {
         return images[idx];
     }
 
+     public static int getNumClasses(String timetable ) {
+
+        char target = '!'; // ! indicates end of entry
+        long numCommas = countCharacter(timetable,target);
+
+        int numOfCommas = (int) numCommas ;
+
+        return numOfCommas;
+
+    }
+
+    public static long countCharacter(String str, char ch) {
+        return str.chars().filter(c -> c == ch).count();
+    }
 
 }
