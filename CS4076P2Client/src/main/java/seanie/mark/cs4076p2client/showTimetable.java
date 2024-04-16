@@ -125,7 +125,7 @@ public class showTimetable {
                         }
 
 
-                        timetable.getChildren().addAll(mondayLabel,tuesdayLabel,wednesdayLabel,thursdayLabel,fridayLabel,exampleLabel);
+                        timetable.getChildren().addAll(mondayLabel,tuesdayLabel,wednesdayLabel,thursdayLabel,fridayLabel);
                         layout.getChildren().add(timetable);
 
 
