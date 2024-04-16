@@ -34,8 +34,16 @@ public class ClientHandler implements Runnable{
                 try {
                     String action = message.substring(0, 2);
                     String details = message.substring(2);
+                    String newDetails = " "; 
 
-                    List<String> possibleActions = Arrays.asList("ac", "rc", "ds", "st");
+                    // To ensure accurate timetable info 
+                    if (details.length() > 70) {
+                        String [] allDetails = details.split("!");
+                        newDetails = allDetails[1];
+                    }
+                    
+
+                    List<String> possibleActions = Arrays.asList("ac", "rc", "ds", "st","el");
                     if (!possibleActions.contains(action)) {
                         throw new IncorrectActionException("Incorrect action\n");
                     }
@@ -44,6 +52,7 @@ public class ClientHandler implements Runnable{
                         case "ac" -> out.println(ActionHandler.addClass(details, currentModules));
                         case "rc" -> out.println(ActionHandler.removeClass(details, currentModules));
                         case "ds" -> out.println(ActionHandler.displaySchedule(details, currentModules));
+                        case "el" -> out.println(new earlyLecture(details,newDetails,currentModules, 0));    
                         case "st" -> {
                             System.out.println("TERMINATE");
                             out.println("TERMINATE");
