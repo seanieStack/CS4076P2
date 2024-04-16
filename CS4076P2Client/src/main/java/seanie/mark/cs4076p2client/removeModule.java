@@ -1,6 +1,7 @@
 package seanie.mark.cs4076p2client;
 
 
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.stage.WindowEvent;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 
 public class removeModule {
@@ -90,53 +92,50 @@ public class removeModule {
         backButton.setOnAction(e -> returnToMain.run());
 
         submitButton.setOnAction(e -> {
+            System.out.println("Submit Button Pressed");
+            // Get the text from each TextField
             String userModule = userInputModule.getText();
             String userDay = dayMenu.getSelectionModel().getSelectedItem();
             String startTime = selectStartTime.getSelectionModel().getSelectedItem();
             String endTime = selectEndTime.getSelectionModel().getSelectedItem();
             String userRoom = userInputRoom.getText();
 
-            boolean differentTime = VerifyInput.isDifferentTime(startTime, endTime);
-            boolean validLength = VerifyInput.isValidSessionLength(startTime, endTime);
-
-
-            if (!differentTime) {
-
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Start / End time : An error has occurred");
-                alert.setHeaderText("Duplicate time values detected ");
-                alert.setContentText("Start and end time can not have the same value !");
-                alert.show();
-            } else if (!validLength) {
-
-                Alert alert = new Alert(Alert.AlertType.ERROR); //Create method condensing popup window logic
-                alert.setTitle("Start / End time : An error has occurred");
-                alert.setHeaderText("Session length exceeds 3 hours");
-                alert.setContentText("Module sessions can not exceed 3 hours !");
-                alert.show();
-            }
-
-            String resultText = "rc " + userModule + " " + startTime + "-" + endTime + " " + userDay + " " + userRoom;
-
-            String response;
-
-            try{
-                out.println(resultText);
-
-                response = in.readLine();
-
-                if(response.startsWith("cr")){
-                    displayText.setText("Class removed at " + response.substring(2));
-                } else if (response.equals("nsc")){
-                    displayText.setText("Class not found in timetable");
-                } else if (response.equals("cnf")){
-                    displayText.setText("Class not in timetable");
-                } else {
-                    displayText.setText("Error removing module " + response);
+            Task<String> submitRemoveClass = new MessageSenderTask(in, out,"ac", userModule, userDay, startTime, endTime, userRoom);
+            submitRemoveClass.setOnSucceeded(ev -> {
+                String response = submitRemoveClass.getValue();
+                switch (response){
+                    case "cr":
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Module Removed !");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Timetable is now updated to reflect " + userModule +" being removed ");
+                        break;
+                    case "nsc":
+                        Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
+                        overlapAlert.setTitle("Error remove Module : " + userModule);
+                        overlapAlert.setHeaderText(null);
+                        overlapAlert.setContentText("Module : " + userModule +" was not in the timetable at that time");
+                        overlapAlert.show();
+                        break;
+                    case "cnf":
+                        Alert ttFullAlert = new Alert(Alert.AlertType.ERROR);
+                        ttFullAlert.setTitle("Error remove Module : " + userModule);
+                        ttFullAlert.setHeaderText(null);
+                        ttFullAlert.setContentText("Module : " + userModule +" is not a class in this timetable");
+                        ttFullAlert.show();
+                        break;
                 }
-            } catch (Exception ex){
-                displayText.setText("Error Adding Module");
-            }
+            });
+            submitRemoveClass.setOnFailed(ev ->{
+                Throwable ex = submitRemoveClass.getException();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invaild Data Provided");
+                alert.setHeaderText("Invaild Data Provided");
+                alert.setContentText(ex.getMessage());
+                alert.show();
+            });
+
+            new Thread(submitRemoveClass).start();
         });
 
         title.getChildren().addAll(screenDescriptor);
@@ -166,7 +165,7 @@ public class removeModule {
 
         Scene scene;
         scene = new Scene(root, 500, 600);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm()); //Added to fix Mac font issue
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm()); //Added to fix Mac font issue
         Utillity.enterForSubmisson(scene,submitButton);
 
         stage.setScene(scene);

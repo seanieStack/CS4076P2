@@ -176,7 +176,7 @@ public class requests {
         root.setTop(title);
         root.setCenter(form);
 
-        BackgroundImage backgroundImage = new BackgroundImage(
+          BackgroundImage backgroundImage = new BackgroundImage(
                 new Image(String.valueOf(getClass().getResource("/" + Utillity.getRandomImage()))),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
