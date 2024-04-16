@@ -121,7 +121,7 @@ public class showTimetable {
                             int[] nodes = Utillity.moduleNodes(entry);  // Determine grid positions based on time and day
                             Label moduleWithNodes = new Label(parts[0] + " " + parts[4]);  // Format: ModuleCode Room
                             GridPane.setConstraints(moduleWithNodes, nodes[0], nodes[1]);  // Set position in the grid
-                            timetable.getChildren().add(moduleWithNodes);
+                            timetable.getChildren().add(moduleWithNodes); //Removed redundant "exampleLabel" here
                         }
 
 
