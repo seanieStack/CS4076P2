@@ -14,6 +14,7 @@ public class UtilityFunctions {
                         .append(",").append(entry.getStartTime())
                         .append(",").append(entry.getEndTime())
                         .append(",").append(entry.getRoom())
+                        .append("!") // Added this as symbol to indicate end of a class
                         .append("\n");
             }
             timetableBuilder.append("\n");
