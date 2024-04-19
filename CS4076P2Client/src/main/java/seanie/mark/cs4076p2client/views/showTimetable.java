@@ -45,14 +45,14 @@ public class showTimetable {
         root2.setSpacing(10);
         root2.setAlignment(Pos.CENTER);
 
-        Button submitButton = new Button("Submit");
+        Button viewButton = new Button("View"); // 'Submit was probably not the best word for this
         Button backButton = new Button("Return");
-        root2.getChildren().addAll(submitButton, backButton);
+        root2.getChildren().addAll(viewButton, backButton);
         backButton.setOnAction(e -> returnToMain.run());
 
         Text displayText = new Text();
 
-        submitButton.setOnAction(e -> {
+        viewButton.setOnAction(e -> {
 
                     try {
                         BackgroundImage backgroundImage = new BackgroundImage(
