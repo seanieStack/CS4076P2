@@ -1,11 +1,11 @@
-package seanie.mark.cs4076p2client;
+package seanie.mark.cs4076p2client.controllers;
 import javafx.concurrent.Task;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class MessageSenderTask extends Task<String>{
+public class MessageSenderTask extends Task<String>{
 
     String action;
     String[] details;
@@ -27,33 +27,33 @@ class MessageSenderTask extends Task<String>{
         String response = null;
 
         if(!action.equals("ac") && !action.equals("rc") && !action.equals("rq")){
-            throw new Exception("Invaild Action");
+            throw new Exception("Invalid Action");
         }
 
         switch(action){
             case "ac":
                 System.out.println("ac");
-                response = addClass();
+                response = addRemoveClass("ac");
                 break;
             case "rc":
-                response = removeClass();
+                response = addRemoveClass("rc");
                 break;
             case "rq":
-//                response = requests();
+                response = requests();
                 break;
         }
         return response;
     }
 
-    private String addClass() throws IOException {
+    private String addRemoveClass(String op) throws IOException {
         String userModule = details[0];
         String userDay = details[1];
         String startTime = details[2];
         String endTime = details[3];
         String userRoom = details[4];
 
-        boolean differentTime = VerifyInput.isDifferentTime(startTime, endTime);
-        boolean validLength = VerifyInput.isValidSessionLength(startTime, endTime);
+        boolean differentTime = Utility.isDifferentTime(startTime, endTime);
+        boolean validLength = Utility.isValidSessionLength(startTime, endTime);
 
 
         if (!differentTime) {
@@ -62,7 +62,7 @@ class MessageSenderTask extends Task<String>{
             throw new IllegalArgumentException("Modules Cannot Exceed 3hrs");
         }
 
-        String resultText = "ac " + userModule + " " + startTime + "-" + endTime + " " + userDay + " " + userRoom;
+        String resultText = op + " " + userModule + " " + startTime + "-" + endTime + " " + userDay + " " + userRoom;
         String response;
         out.println(resultText);
 
@@ -71,34 +71,41 @@ class MessageSenderTask extends Task<String>{
         return response;
     }
 
-    private String removeClass() throws IOException {
+    private String requests() throws IOException {
         String userModule = details[0];
         String userDay = details[1];
         String startTime = details[2];
         String endTime = details[3];
         String userRoom = details[4];
+        String differentStartTime = details[5];
+        String differentEndTime = details[6];
 
-        boolean differentTime = VerifyInput.isDifferentTime(startTime, endTime);
-        boolean validLength = VerifyInput.isValidSessionLength(startTime, endTime);
+        boolean originDifferentTime = Utility.isDifferentTime(startTime, endTime);
+        boolean originValidLength = Utility.isValidSessionLength(startTime, endTime);
 
+        boolean newDifferentTime = Utility.isDifferentTime(differentStartTime, differentEndTime);
+        boolean newValidLength = Utility.isValidSessionLength(differentStartTime, differentEndTime);
 
-        if (!differentTime) {
+        if (!originDifferentTime || !newDifferentTime) {
             throw new IllegalArgumentException("Please Input Different Times");
-        } else if (!validLength) {
+        } else if (!originValidLength || !newValidLength) {
             throw new IllegalArgumentException("Modules Cannot Exceed 3hrs");
+        } else if (startTime.equals("09:00")) {
+            throw new IllegalArgumentException("Start Time Cannot Be 9:00AM");
+        } else if (startTime.equals(differentStartTime) || endTime.equals(differentEndTime)) {
+            throw new IllegalArgumentException("Please Review Your Selections");
         }
 
-        String resultText = "rc" + userModule + " " + startTime + "-" + endTime + " " + userDay + " " + userRoom;
+        String resultText = "el " + userModule + " " + startTime + "-" + endTime + " " + userDay + " " + userRoom + " " + differentStartTime + "-" + differentEndTime;
+
         String response;
-        try{
-            out.println(resultText);
 
-            response = in.readLine();
+        out.println(resultText);
 
-        } catch (Exception ex){
-            throw ex;
-        }
+        response = in.readLine();
+
         return response;
     }
 }
+
 

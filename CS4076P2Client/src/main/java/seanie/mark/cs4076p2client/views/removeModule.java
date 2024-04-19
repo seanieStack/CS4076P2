@@ -1,4 +1,5 @@
-package seanie.mark.cs4076p2client;
+package seanie.mark.cs4076p2client.views;
+
 
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -10,41 +11,43 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import seanie.mark.cs4076p2client.App;
+import seanie.mark.cs4076p2client.controllers.MessageSenderTask;
+import seanie.mark.cs4076p2client.controllers.Utility;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.Objects;
 
-public class addModule {
 
-    private final Stage stage;
+public class removeModule {
+    public Stage stage;
+
     private final Runnable returnToMain;
 
     private final BufferedReader in;
     private final PrintWriter out;
 
-    public addModule(Stage stage, Runnable returnToMain, BufferedReader in, PrintWriter out){
-        this.stage = stage;
-        this.returnToMain = returnToMain;
-        this.in = in;
-        this.out = out;
-        initScreen();
+    public removeModule() {
+        this.stage = homeScreen.stage;
+        this.returnToMain = homeScreen::returnHome;
+        this.in = App.in;
+        this.out = App.out;
+        initializeScreen();
     }
 
-    public void initScreen() {
+    private void  initializeScreen () {
 
         BorderPane root = new BorderPane();
 
-        //Hbox for the setting such as startTime, endTime and Day
         HBox settings = new HBox();
         settings.setPadding(new Insets(5, 0, 0, 0));
         settings.setAlignment(Pos.CENTER);
 
-        //Hbox for the module lable and code
         HBox module = new HBox();
         module.setPadding(new Insets(5, 0, 0, 0));
         module.setAlignment(Pos.CENTER);
 
-        //Hbox for the room lable and name
         HBox room = new HBox();
         room.setPadding(new Insets(5, 0, 0, 0));
         room.setAlignment(Pos.CENTER);
@@ -58,7 +61,7 @@ public class addModule {
         finishButton.setSpacing(10);
         finishButton.setAlignment(Pos.CENTER);
 
-        Label screenDescriptor = new Label("Add New Module");
+        Label screenDescriptor = new Label("Remove Existing Module");
         screenDescriptor.setStyle("-fx-font-size: 20pt; -fx-font-weight: bold;");
 
         Label moduleLabel = new Label("Module:");
@@ -91,7 +94,6 @@ public class addModule {
         Text displayText = new Text();
         backButton.setOnAction(e -> returnToMain.run());
 
-        // Set the action when the button is pressed
         submitButton.setOnAction(e -> {
             System.out.println("Submit Button Pressed");
             // Get the text from each TextField
@@ -101,51 +103,45 @@ public class addModule {
             String endTime = selectEndTime.getSelectionModel().getSelectedItem();
             String userRoom = userInputRoom.getText();
 
-            Task<String> submitAddClass = new MessageSenderTask(in, out,"ac", userModule, userDay, startTime, endTime, userRoom);
-            submitAddClass.setOnSucceeded(ev -> {
-                String response = submitAddClass.getValue();
+            Task<String> submitRemoveClass = new MessageSenderTask(in, out,"ac", userModule, userDay, startTime, endTime, userRoom);
+            submitRemoveClass.setOnSucceeded(ev -> {
+                String response = submitRemoveClass.getValue();
                 switch (response){
-                    case "ca":
+                    case "cr":
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Module Added !");
+                        alert.setTitle("Module Removed !");
                         alert.setHeaderText(null);
-                        alert.setContentText("Timetable is now updated to reflect " + userModule +" being added ");
+                        alert.setContentText("Timetable is now updated to reflect " + userModule +" being removed ");
                         break;
-                    case "ol":
+                    case "nsc":
                         Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
-                        overlapAlert.setTitle("Error adding Module : " + userModule);
+                        overlapAlert.setTitle("Error remove Module : " + userModule);
                         overlapAlert.setHeaderText(null);
-                        overlapAlert.setContentText("Module : " + userModule +" already exists and was not added  ");
+                        overlapAlert.setContentText("Module : " + userModule +" was not in the timetable at that time");
                         overlapAlert.show();
                         break;
-                    case "ttf":
+                    case "cnf":
                         Alert ttFullAlert = new Alert(Alert.AlertType.ERROR);
-                        ttFullAlert.setTitle("Error adding Module : " + userModule);
+                        ttFullAlert.setTitle("Error remove Module : " + userModule);
                         ttFullAlert.setHeaderText(null);
-                        ttFullAlert.setContentText("Module : " + userModule +" could not be added , A student can not exceed 5 modules   ");
+                        ttFullAlert.setContentText("Module : " + userModule +" is not a class in this timetable");
                         ttFullAlert.show();
-                        break;
-                    case "im":
-                        Alert wrongFormatAlert = new Alert(Alert.AlertType.ERROR);
-                        wrongFormatAlert.setTitle("Error adding Module : " + userModule);
-                        wrongFormatAlert.setHeaderText(null);
-                        wrongFormatAlert.setContentText("Module : " + userModule + " does not follow the proper module formatting e.g. CS4076");
-                        wrongFormatAlert.show();
                         break;
                 }
             });
-            submitAddClass.setOnFailed(ev ->{
-                Throwable ex = submitAddClass.getException();
+            submitRemoveClass.setOnFailed(ev ->{
+                Throwable ex = submitRemoveClass.getException();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Invaild Data Provided");
-                alert.setHeaderText("Invaild Data Provided");
+                alert.setTitle("Invalid Data Provided");
+                alert.setHeaderText("Invalid Data Provided");
                 alert.setContentText(ex.getMessage());
                 alert.show();
             });
 
-            new Thread(submitAddClass).start();
+            new Thread(submitRemoveClass).start();
         });
 
+        title.getChildren().addAll(screenDescriptor);
         module.getChildren().addAll(moduleLabel, userInputModule);
         settings.getChildren().addAll(selectStartTime, timeSeparator, selectEndTime, timeDaySeparator, dayMenu);
         room.getChildren().addAll(roomLabel, userInputRoom);
@@ -154,15 +150,15 @@ public class addModule {
         VBox form = new VBox(10);
         form.setAlignment(Pos.CENTER);
         form.setPadding(new Insets(10, 10, 10, 10));
-        form.getChildren().addAll(screenDescriptor, module, settings, room, finishButton, displayText);
+        form.getChildren().addAll(module, settings, room, finishButton, displayText);
 
-        stage.setOnCloseRequest((WindowEvent we) -> Utillity.quitApp(in, out));
+        stage.setOnCloseRequest((WindowEvent we) -> Utility.quitApp());
 
         root.setTop(title);
         root.setCenter(form);
 
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image(String.valueOf(getClass().getResource("/bg1.png"))),
+                new Image(String.valueOf(getClass().getResource("/" + Utility.getRandomImage()))),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
@@ -172,15 +168,14 @@ public class addModule {
 
         Scene scene;
         scene = new Scene(root, 500, 600);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm()); //Added to fix Mac font issue
-        Utillity.enterForSubmisson(scene,submitButton);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm()); //Added to fix Mac font issue
+        Utility.enterForSubmission(scene,submitButton);
 
         stage.setScene(scene);
-        stage.setTitle("Add Module");
-        stage.getIcons().add(Utillity.icon);
+        stage.setTitle("Remove Module");
+        stage.getIcons().add(Utility.icon);
         stage.setResizable(false);
         stage.show();
+
     }
 }
-
-

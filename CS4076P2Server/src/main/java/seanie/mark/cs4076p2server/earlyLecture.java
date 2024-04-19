@@ -45,6 +45,7 @@ public class earlyLecture extends RecursiveTask<Integer> {
         String newDay = newDetailsArray[3];
         String oldRoom = newDetailsArray[4];
         String newRoom = newDetailsArray[4];
+
         if(flag == 0 ){ // CheckInputValidity
             if (oldModule.equals(newModule) && !oldStartTime.equals(newStartTime) && !oldEndTime.equals(newEndTime) && oldDay.equals(newDay) && oldRoom.equals(newRoom)){
                 isValid = true ;

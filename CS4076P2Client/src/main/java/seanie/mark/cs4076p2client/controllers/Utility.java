@@ -1,22 +1,27 @@
-package seanie.mark.cs4076p2client;
+package seanie.mark.cs4076p2client.controllers;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import seanie.mark.cs4076p2client.App;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.*;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-public class Utillity {
+public class Utility {
 
-    public static Image icon = new Image(String.valueOf(Utillity.class.getResource("/UL_LOGO.png")));
+    public static Image icon = new Image(String.valueOf(Utility.class.getResource("/UL_LOGO.png")));
 
-    public static void quitApp(BufferedReader in, PrintWriter out) {
+    public static void quitApp() {
         try{
+            BufferedReader in = App.in;
+            PrintWriter out = App.out;
+
             out.println("st");
             String response = in.readLine();
             System.out.println(response);
@@ -28,7 +33,7 @@ public class Utillity {
         }
     }
 
-    public static void enterForSubmisson(Scene scene, Button button) {
+    public static void enterForSubmission(Scene scene, Button button) {
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 button.fire();
@@ -86,15 +91,8 @@ public class Utillity {
     public static String getRandomImage() {
         String[] images = {
                 "bg1.png"
-//                "bg2.png",
-//                "bg3.png",
-//                "bg4.png",
-//                "bg5.png",
-//                "bg6.png",
-//                "bg7.png",
-//                "bg8.png",
         };
-        int idx = new Random().nextInt(images.length);
+        int idx = 0;
         return images[idx];
     }
 
@@ -103,9 +101,7 @@ public class Utillity {
         char target = '!'; // ! indicates end of entry
         long numCommas = countCharacter(timetable,target);
 
-        int numOfCommas = (int) numCommas ;
-
-        return numOfCommas;
+         return (int) numCommas;
 
     }
 
@@ -113,4 +109,19 @@ public class Utillity {
         return str.chars().filter(c -> c == ch).count();
     }
 
+    public static boolean isDifferentTime ( String startTime , String endTime) {
+        LocalTime start = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime end = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
+        return !start.equals(end);
+    }
+
+    public static boolean isValidSessionLength (String startTime , String endTime) {
+        LocalTime start = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime end = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
+        Duration duration = Duration.between(start,end);
+        long longHours = duration.toHours();
+        int hours = (int) longHours;
+
+         return hours <= 3;
+     }
 }
