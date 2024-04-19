@@ -1,4 +1,4 @@
-package seanie.mark.cs4076p2server;
+package seanie.mark.cs4076p2server.controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.net.*;
 import java.util.Arrays;
 import java.util.List;
 import seanie.mark.cs4076p2server.exceptions.IncorrectActionException;
+import seanie.mark.cs4076p2server.models.Module;
 
 public class ClientHandler implements Runnable{
     private final Socket client;

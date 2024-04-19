@@ -1,12 +1,9 @@
-package seanie.mark.cs4076p2server;
+package seanie.mark.cs4076p2server.controllers;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
+import seanie.mark.cs4076p2server.models.Module;
+
 import java.util.List;
 import java.util.concurrent.RecursiveTask;
-
-import static java.lang.System.out;
-import static  java.lang.System.in;
 
 
 public class earlyLecture extends RecursiveTask<Integer> {

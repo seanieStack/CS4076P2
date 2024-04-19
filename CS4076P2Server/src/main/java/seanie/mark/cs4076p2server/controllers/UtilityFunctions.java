@@ -1,4 +1,7 @@
-package seanie.mark.cs4076p2server;
+package seanie.mark.cs4076p2server.controllers;
+
+import seanie.mark.cs4076p2server.models.Module;
+import seanie.mark.cs4076p2server.models.TimetableEntry;
 
 import java.util.*;
 

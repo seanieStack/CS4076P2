@@ -1,4 +1,4 @@
-package seanie.mark.cs4076p2server;
+package seanie.mark.cs4076p2server.models;
 
 import java.util.ArrayList;
 import java.util.List;

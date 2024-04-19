@@ -1,5 +1,8 @@
 package seanie.mark.cs4076p2server;
 
+import seanie.mark.cs4076p2server.controllers.ClientHandler;
+import seanie.mark.cs4076p2server.models.Module;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;

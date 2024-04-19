@@ -1,4 +1,4 @@
-package seanie.mark.cs4076p2server;
+package seanie.mark.cs4076p2server.models;
 
 public class TimetableEntry {
     private final String startTime;
