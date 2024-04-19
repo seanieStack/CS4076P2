@@ -11,9 +11,10 @@ public class UtilityFunctions {
         StringBuilder timetableBuilder = new StringBuilder();
 
         for (Module module : currentModules) {
-            timetableBuilder.append("").append(module.getModuleCode());
+
             for (TimetableEntry entry : module.getTimetable()) {
-                timetableBuilder.append(",").append(entry.getDay())
+                timetableBuilder.append(module.getModuleCode())
+                        .append(",").append(entry.getDay())
                         .append(",").append(entry.getStartTime())
                         .append(",").append(entry.getEndTime())
                         .append(",").append(entry.getRoom())

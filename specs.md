@@ -18,13 +18,13 @@ Additionally, a new feature allows clients to request ‘early lectures’, prom
 
 ## Assessment Criteria
 
-- **Implementation of Multi-Threading for Multi-Clients**: 10%
+- **~~Implementation of Multi-Threading for Multi-Clients:~~** 10%
 - **‘Early Lectures’ Test – With All Events and Divide and Conquer**: 20%
 - **Implementation of Fork-Join Rule using Divide and Conquer**: 20%
-- **Implementation of Synchronization and Controlled Access**: 20%
+- **~~Implementation of Synchronization and Controlled Access:~~** 20%
 - **Display Timetable on Client-Side Using Proper GUI**: 10%
-- **Implementation of `javafx.concurrent`**: 10%
-- **Code Structure and Modularization – Implementation of MVC**: 10%
+- **~~Implementation of `javafx.concurrent`~~**: 10%
+- **~~Code Structure and Modularization – Implementation of MVC~~**: 10%
 - **BONUS: Any Additional Convincing Feature**: Up to 40%
 
 ## Submission Format
