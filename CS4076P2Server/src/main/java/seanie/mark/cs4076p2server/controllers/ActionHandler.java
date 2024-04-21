@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ActionHandler {
     static synchronized String addClass(String details, List<Module> currentModules) {
-        if(currentModules.size() < 5){
+        if(currentModules.size() + 1 <= 5){
 
             String[] parts = details.strip().split(" ");
 
@@ -90,22 +90,7 @@ public class ActionHandler {
         }
     }
 
-    static String displaySchedule(String details, List<Module> currentModules) {
-//        String[] parts = details.strip().split(" ");
-//
-//        String moduleCode = parts[0];
-//
-//        for(Module m : currentModules){
-//            if(m.getModuleCode().equals(moduleCode)){
-//                List<TimetableEntry> timetable = m.getTimetable();
-//                for(TimetableEntry t : timetable){
-//                    System.out.println(t.getTime() + " " + t.getDay() + " " + t.getRoom());
-//                }
-//                return "cp";
-//            }
-//        }
-//        return "cnf";
-//    }
+    static String displaySchedule(List<Module> currentModules) {
 
         String x = UtilityFunctions.getFullTimetableAsString(currentModules);
 

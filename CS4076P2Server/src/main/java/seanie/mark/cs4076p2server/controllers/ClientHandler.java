@@ -52,7 +52,7 @@ public class ClientHandler implements Runnable{
                     switch (action) {
                         case "ac" -> out.println(ActionHandler.addClass(details, currentModules));
                         case "rc" -> out.println(ActionHandler.removeClass(details, currentModules));
-                        case "ds" -> out.println(ActionHandler.displaySchedule(details, currentModules));
+                        case "ds" -> out.println(ActionHandler.displaySchedule(currentModules));
                         case "el" -> out.println(new earlyLecture(details,newDetails,currentModules, 0));    
                         case "st" -> {
                             System.out.println("TERMINATE");
