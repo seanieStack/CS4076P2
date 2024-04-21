@@ -100,7 +100,7 @@ public class requests {
 
         ChoiceBox<String> selectNewEndTime = new ChoiceBox<>();
         selectNewEndTime.getItems().addAll(Utility.getTimes());
-        selectNewEndTime.setValue("10:00");
+        selectNewEndTime.setValue("11:00");
 
 
         VBox root2 = new VBox();
@@ -122,14 +122,16 @@ public class requests {
             String endTime = selectEndTime.getSelectionModel().getSelectedItem();
             String userRoom = userInputRoom.getText();
             String differentStartTime = selectNewStartTime.getSelectionModel().getSelectedItem();
-            String differentEndTime = selectEndTime.getSelectionModel().getSelectedItem();
+            String differentEndTime = selectNewEndTime.getSelectionModel().getSelectedItem(); // Fixed error here
 
             Task<String> submitRequestClass = new MessageSenderTask(in, out,"rq", userModule, userDay, startTime, endTime, userRoom, differentStartTime, differentEndTime);
             submitRequestClass.setOnSucceeded(ev -> {
                 String response = submitRequestClass.getValue();
-//                switch (response){
+//           //     switch (response){
 //                    //TODO: Need Server setup to handle this
-//                }
+//            //    }
+
+
             });
             submitRequestClass.setOnFailed(ev ->{
                 Throwable ex = submitRequestClass.getException();
@@ -137,6 +139,7 @@ public class requests {
                 alert.setTitle("Invalid Data Provided");
                 alert.setHeaderText("Invalid Data Provided");
                 alert.setContentText(ex.getMessage());
+                System.out.println(ex.getMessage()); // For debugging on mac
                 alert.show();
             });
 
