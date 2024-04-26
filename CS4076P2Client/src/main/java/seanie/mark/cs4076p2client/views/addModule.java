@@ -114,6 +114,7 @@ public class addModule {
                         alert.setTitle("Module Added !");
                         alert.setHeaderText(null);
                         alert.setContentText("Timetable is now updated to reflect " + userModule +" being added ");
+                        alert.show();
                         break;
                     case "ol":
                         Alert overlapAlert = new Alert(Alert.AlertType.ERROR);

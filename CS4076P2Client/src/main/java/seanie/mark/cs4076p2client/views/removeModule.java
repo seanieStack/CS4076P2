@@ -112,6 +112,7 @@ public class removeModule {
                         alert.setTitle("Module Removed !");
                         alert.setHeaderText(null);
                         alert.setContentText("Timetable is now updated to reflect " + userModule +" being removed ");
+                        alert.show();
                         break;
                     case "nsc":
                         Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
