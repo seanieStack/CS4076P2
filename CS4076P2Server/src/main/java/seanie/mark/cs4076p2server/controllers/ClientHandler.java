@@ -69,7 +69,6 @@ public class ClientHandler implements Runnable{
                         case "el" -> {
                             EarlyLec earlyLecTask = new EarlyLec(addModuleController, removeModuleController, checkAvailabilityController, currentModules, details);
                             String result = forkJoinPool.invoke(earlyLecTask); // Executes the task and waits for the result
-                            System.out.println(result); // Now printing the actual result of the task
                             out.println(result);
                         }
                         //  case "el" -> out.println(earlyLec.compute());

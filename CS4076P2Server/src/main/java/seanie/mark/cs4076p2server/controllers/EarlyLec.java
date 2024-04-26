@@ -26,34 +26,31 @@ public class EarlyLec extends RecursiveTask<String> {
 
     @Override
     protected String compute() {
-        // Was able to implement fork join but not divide and conquer , its too late for me to even start looking at that
-
-        ForkJoinPool forkJoinPool = new ForkJoinPool();
 
         // Create tasks
         CheckOverlapTask checkTask = new CheckOverlapTask(checkAvailabilityController, details, currentModules);
         RemoveModuleTask removeTask = new RemoveModuleTask(removeModuleController, details, currentModules);
         AddModuleTask addTask = new AddModuleTask(addModuleController, details, currentModules);
 
-        // Execute tasks
-        boolean overlap = forkJoinPool.invoke(checkTask);
-        if (!overlap) {
-            boolean removed = forkJoinPool.invoke(removeTask);
-            if (!removed) {
-                boolean added = forkJoinPool.invoke(addTask);
-                if(added) {
-                    return "sr"; // Al operation successful
-                }else {
-                    return "fa"; // failed adding module
-                }
+        // Fork tasks
+        checkTask.fork();
+        removeTask.fork();
+        addTask.fork();
 
-            } else {
-                return "fr";  // Failed  removing module
-            }
+        // Execute tasks separately (divide)
+        Boolean checkTaskResult = checkTask.compute();
+        Boolean removeTaskResult = removeTask.join();
+        Boolean addTaskResult = addTask.join();
+        //combine results ( conquer)
+        if ( !checkTaskResult && removeTaskResult && addTaskResult) {
+            return "sr"; // All operations successful
+        } else if (checkTaskResult){
+            return "ol"; // overlap exists
+        } else if (!removeTaskResult){
+            return "fa"; //Failed removing
         } else {
-            return "ol";  // Overlap exists
+            return "fa"; // Failed adding
         }
-
 
     }
 }

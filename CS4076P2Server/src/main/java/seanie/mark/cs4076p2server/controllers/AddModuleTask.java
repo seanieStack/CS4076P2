@@ -18,6 +18,11 @@ public class AddModuleTask extends RecursiveTask<Boolean> {
 
     @Override
     protected Boolean compute() {
-        return controller.addModule(details, currentModules);
+        if (!controller.addModule(details, currentModules)) {
+            return  true ;
+        } else {
+            return  false;
+        }
+
     }
 }
