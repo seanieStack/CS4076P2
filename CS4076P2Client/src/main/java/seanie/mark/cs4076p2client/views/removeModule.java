@@ -95,7 +95,6 @@ public class removeModule {
         backButton.setOnAction(e -> returnToMain.run());
 
         submitButton.setOnAction(e -> {
-            System.out.println("Submit Button Pressed");
             // Get the text from each TextField
             String userModule = userInputModule.getText();
             String userDay = dayMenu.getSelectionModel().getSelectedItem();

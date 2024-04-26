@@ -97,7 +97,6 @@ public class addModule {
 
         // Set the action when the button is pressed
         submitButton.setOnAction(e -> {
-            System.out.println("Submit Button Pressed");
             // Get the text from each TextField
             String userModule = userInputModule.getText();
             String userDay = dayMenu.getSelectionModel().getSelectedItem();

@@ -18,7 +18,6 @@ public class MessageSenderTask extends Task<String>{
     PrintWriter out;
 
     public MessageSenderTask(BufferedReader in, PrintWriter out, String action, String... details){
-        System.out.println("MessageSenderTask");
         this.action = action;
         this.details = details;
         this.in = in;

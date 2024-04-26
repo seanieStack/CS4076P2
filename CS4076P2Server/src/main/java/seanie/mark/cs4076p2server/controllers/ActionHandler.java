@@ -92,11 +92,7 @@ public class ActionHandler {
 
     static String displaySchedule(List<Module> currentModules) {
 
-        String x = UtilityFunctions.getFullTimetableAsString(currentModules);
-
-        System.out.println(x);
-
-        return x;
+        return UtilityFunctions.getFullTimetableAsString(currentModules);
     }
 
 }

@@ -4,34 +4,26 @@ import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import seanie.mark.cs4076p2client.App;
 import seanie.mark.cs4076p2client.controllers.GetTimetableTask;
-import seanie.mark.cs4076p2client.controllers.MessageSenderTask;
 import seanie.mark.cs4076p2client.controllers.Utility;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.util.Arrays;
+
 import java.util.Objects;
 
 
 public class showTimetable {
     public Stage stage;
     private final Runnable returnToMain;
-    private final BufferedReader in;
-    private final PrintWriter out;
+
     
     public showTimetable() {
         this.stage = homeScreen.stage;
         this.returnToMain = homeScreen::returnHome;
-        this.in = App.in;
-        this.out = App.out;
         initializeScreen();
     }
 
@@ -87,4 +79,6 @@ public class showTimetable {
         stage.getIcons().add(Utility.icon);
         stage.setOnCloseRequest((WindowEvent we) -> Utility.quitApp());
     }
+
+
 }
