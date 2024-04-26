@@ -29,12 +29,12 @@ public class addModuleController  {
         try {
             boolean result = false; //default value
 
-            String[] splitDetails = details.trim().split(" ");// Adjust based on actual data format
-            String moduleCode = splitDetails[0]; // Test these values to ensure correctness
+            String[] splitDetails = details.trim().split(" ");
+            String moduleCode = splitDetails[0];
             String newTime = splitDetails[4]; // New startTime
             String day = splitDetails[2]; // New day
             String room = splitDetails[3];  // Room does not change
-          //  Module m = new Module(moduleCode);
+
 
             String addText = " " + moduleCode + " " + newTime + " " + day + " " + room;
 
@@ -59,14 +59,12 @@ public class addModuleController  {
                 result = false  ;
                 System.out.println(" tff");
             }
-            //Possibly should use added.trim()
-           // System.out.println(response);
-           // return true ; //to be changed later with checking of response
+
             return  result ;
         } catch (Exception e ) {
             e.printStackTrace();
             return false  ; // if an error occurs
         }
-      //  return  true ; // Also to be changed
+
     }
 }

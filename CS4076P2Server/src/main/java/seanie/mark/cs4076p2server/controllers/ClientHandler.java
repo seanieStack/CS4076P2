@@ -65,13 +65,12 @@ public class ClientHandler implements Runnable{
                         case "ac" -> out.println(ActionHandler.addClass(details, currentModules));
                         case "rc" -> out.println(ActionHandler.removeClass(details, currentModules));
                         case "ds" -> out.println(ActionHandler.displaySchedule(currentModules));
-                       // case "el" -> out.println(new EarlyLec(addModuleController , removeModuleController, checkAvailabilityController, currentModules,details)); // Removed module ok
                         case "el" -> {
                             EarlyLec earlyLecTask = new EarlyLec(addModuleController, removeModuleController, checkAvailabilityController, currentModules, details);
                             String result = forkJoinPool.invoke(earlyLecTask); // Executes the task and waits for the result
                             out.println(result);
                         }
-                        //  case "el" -> out.println(earlyLec.compute());
+
                         case "st" -> {
                             System.out.println("TERMINATE");
                             out.println("TERMINATE");

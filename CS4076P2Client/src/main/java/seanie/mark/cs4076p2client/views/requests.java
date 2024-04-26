@@ -16,7 +16,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.Objects;
 
-//TODO: More input checks , then Remove module and Add it back with the new details
+
 
 public class requests {
     public Stage stage;
@@ -128,8 +128,6 @@ public class requests {
             submitRequestClass.setOnSucceeded(ev -> {
                 String response = submitRequestClass.getValue();
 
-                //TODO: @Seanie can you test the contentText of these to make sure they're fine i cant see it on mac
-                //TODO: Wrong error displays even when class is rescheduled properly ,Should not be too hard to fix ,relevant logic is in EarlyLec
 
                 switch (response) {
                     case "sr":
@@ -146,11 +144,11 @@ public class requests {
                         overlapAlert.setContentText("A class is already exists at " + differentStartTime +"-"+differentEndTime + " , remove this class or choose a new time");
                         overlapAlert.show();
                         break;
-                    case "fr" : //TODO: This error appears even when a module has being
+                    case "fr" :
                         Alert removalAlert = new Alert(Alert.AlertType.ERROR);
                         removalAlert.setTitle("Failed to remove " + userModule);
                         removalAlert.setHeaderText(null);
-                        removalAlert.setContentText("An error prevented " + userModule + " from being removed"); //TODO: Improve this message as well as the addition one
+                        removalAlert.setContentText("An error prevented " + userModule + " from being removed");
                         removalAlert.show();
                         break;
                     case "fa" :
@@ -161,15 +159,6 @@ public class requests {
                         additionAlert.show();
                         break;
                 }
-                        /**
-                    case "cnf":
-                        Alert ttFullAlert = new Alert(Alert.AlertType.ERROR);
-                        ttFullAlert.setTitle("Error remove Module : " + userModule);
-                        ttFullAlert.setHeaderText(null);
-                        ttFullAlert.setContentText("Module : " + userModule +" is not a class in this timetable");
-                        ttFullAlert.show();
-                        break;
-                        */
 
             });
             submitRequestClass.setOnFailed(ev ->{
