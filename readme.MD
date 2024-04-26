@@ -9,6 +9,7 @@ This is just the core code from part 1 of the project. This will be adapted for 
 
 - `ac` -> **Add Class**: Adds a specified class to the schedule.
 - `rc` -> **Remove Class**: Removes a specified class from the schedule.
+- `el` -> **Early Lecture **: Reschedule a class to a earlier (or later) time
 - `ds` -> **Display Schedule**: Displays the current class schedule.
 - `st` -> **Stop (Close Connection)**: Terminates the connection with the server.
 
@@ -26,6 +27,12 @@ This is just the core code from part 1 of the project. This will be adapted for 
 - `cr + details` -> **Class removed + details about**
 - `cnf` -> **No class found**
 
+### Early Lecture 
+- `sr` -> **Succsessful reschedule **
+- `ol` -> **New time overlaps with existing class**
+- `fr` -> **Failed to remove class at old time*
+- `fa` -> **Failed to add class at new time*
+
 ### Display Schedule
 - `cp` -> **Class printed**
 - `cnf` -> **No class found**
@@ -42,7 +49,10 @@ This is just the core code from part 1 of the project. This will be adapted for 
 2. **Remove Class (`rc`)**: Requires additional parameters.
     - Format: `rc <ModuleCode> <StartTime-EndTime> <Day> <Room>`
     - Example: `rm CS4076 09:00-10:00 monday CS-4005B`
-3. **Display Schedule (`ds`)**: Requires the module code for schedule.
+3. **Early Lectyre (`rc`)**: Requires additional parameters.
+    - Format: `el <ModuleCode> <OldStartTime-OldEndTime> <Day> <Room>`<NewStartTime-NewEndTime>
+
+4. **Display Schedule (`ds`)**: Requires the module code for schedule.
     - Format: `ds <ModuleCode>`
     - Example: `ds CS4076`
 5. **Terminate Connection (`st`)**: No additional parameters required.
@@ -56,6 +66,12 @@ This is just the core code from part 1 of the project. This will be adapted for 
 - `st` (stop) do not require additional information beyond the initial action command.
 
 This structured approach to message formatting ensures a straightforward and effective interaction between the client and server, facilitating easy schedule management.
+
+## Long comment 
+
+- Fork-join seems to work grand apart from wrong error message, it might not be that hard to add divide and conquer into it 
+- There is probably some parts of the code that need to be removed (commeneted out code and debug print statements) but I'll fix that before we submit
+- No other issues as far as I know 
  
 ### Specification
 The assignment specification can be found in specs.md
