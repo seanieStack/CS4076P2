@@ -67,11 +67,3 @@ This is just the core code from part 1 of the project. This will be adapted for 
 
 This structured approach to message formatting ensures a straightforward and effective interaction between the client and server, facilitating easy schedule management.
 
-## Long comment 
-
-- Fork-join seems to work grand apart from wrong error message, it might not be that hard to add divide and conquer into it 
-- There is probably some parts of the code that need to be removed (commeneted out code and debug print statements) but I'll fix that before we submit
-- No other issues as far as I know 
- 
-### Specification
-The assignment specification can be found in specs.md
