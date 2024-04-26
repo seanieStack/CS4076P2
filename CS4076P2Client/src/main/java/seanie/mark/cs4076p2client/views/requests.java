@@ -127,10 +127,49 @@ public class requests {
             Task<String> submitRequestClass = new MessageSenderTask(in, out,"rq", userModule, userDay, startTime, endTime, userRoom, differentStartTime, differentEndTime);
             submitRequestClass.setOnSucceeded(ev -> {
                 String response = submitRequestClass.getValue();
-//           //     switch (response){
-//                    //TODO: Need Server setup to handle this
-//            //    }
 
+                //TODO: @Seanie can you test the contentText of these to make sure they're fine i cant see it on mac
+                //TODO: Wrong error displays even when class is rescheduled properly ,Should not be too hard to fix ,relevant logic is in EarlyLec
+
+                switch (response) {
+                    case "sr":
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Lecture rescheduled");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Timetable is now updated to reflect " + userModule + " being moved from " + startTime + "-" + endTime + " to " + differentStartTime + "-" + differentEndTime);
+                        alert.show();
+                        break;
+                    case "ol":
+                        Alert overlapAlert = new Alert(Alert.AlertType.ERROR);
+                        overlapAlert.setTitle("Class already exists at this time ");
+                        overlapAlert.setHeaderText(null);
+                        overlapAlert.setContentText("A class is already exists at " + differentStartTime +"-"+differentEndTime + " , remove this class or choose a new time");
+                        overlapAlert.show();
+                        break;
+                    case "fr" : //TODO: This error appears even when a module has being
+                        Alert removalAlert = new Alert(Alert.AlertType.ERROR);
+                        removalAlert.setTitle("Failed to remove " + userModule);
+                        removalAlert.setHeaderText(null);
+                        removalAlert.setContentText("An error prevented " + userModule + " from being removed"); //TODO: Improve this message as well as the addition one
+                        removalAlert.show();
+                        break;
+                    case "fa" :
+                        Alert additionAlert = new Alert(Alert.AlertType.ERROR);
+                        additionAlert.setTitle("Failed to add " + userModule);
+                        additionAlert.setHeaderText(null);
+                        additionAlert.setContentText("An error prevented " + userModule + " from being removed");
+                        additionAlert.show();
+                        break;
+                }
+                        /**
+                    case "cnf":
+                        Alert ttFullAlert = new Alert(Alert.AlertType.ERROR);
+                        ttFullAlert.setTitle("Error remove Module : " + userModule);
+                        ttFullAlert.setHeaderText(null);
+                        ttFullAlert.setContentText("Module : " + userModule +" is not a class in this timetable");
+                        ttFullAlert.show();
+                        break;
+                        */
 
             });
             submitRequestClass.setOnFailed(ev ->{
